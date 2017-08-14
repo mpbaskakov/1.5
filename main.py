@@ -31,54 +31,75 @@ def read_key():
 def average_group_grade():
     sum_of_grades = 0
     sum_of_exams = 0
+    grades_count = 0
+    exam_count = 0
+    for i in students:
+        grades_count += len(i['homework'])
+        exam_count += len(i['exam'])
     for stud in students:
         for grades in stud['homework']:
             sum_of_grades += grades
         for exams in stud['exam']:
             sum_of_exams += exams
-    print('Средняя оценка за домашние задания:', sum_of_grades / 50, ', за экзамен:', sum_of_exams / 10, 'по всей группе.')
+    print('Средняя оценка за домашние задания:', sum_of_grades / grades_count, ', за экзамен:', sum_of_exams / exam_count, 'по всей группе.')
 
 def average_group_grade_sex():
     sum_of_grades_male = 0
     sum_of_exams_male = 0
     sum_of_grades_female = 0
     sum_of_exams_female = 0
+    count_of_grades_male = 0
+    count_of_grades_female = 0
+    count_of_exams_male = 0
+    count_of_exams_female = 0
     for stud in students:
         if stud['sex'] == 'м':
             for grades in stud['homework']:
                 sum_of_grades_male += grades
+                count_of_grades_male += 1
             for exams in stud['exam']:
                 sum_of_exams_male += exams
+                count_of_exams_male += 1
         elif stud['sex'] == 'ж':
             for grades in stud['homework']:
                 sum_of_grades_female += grades
+                count_of_grades_female += 1
             for exams in stud['exam']:
                 sum_of_exams_female += exams
-    print('Средняя оценка за домашние задания у мужчин:', sum_of_grades_male / 25)
-    print('Средняя оценка за экзамен у мужчин:', sum_of_exams_male / 5)
-    print('Средняя оценка за домашние задания у женщин:', sum_of_grades_female / 25)
-    print('Средняя оценка за экзамен у женщин:', sum_of_exams_female / 5)
+                count_of_exams_female += 1
+    print('Средняя оценка за домашние задания у мужчин:', sum_of_grades_male / count_of_grades_male)
+    print('Средняя оценка за экзамен у мужчин:', sum_of_exams_male / count_of_exams_male)
+    print('Средняя оценка за домашние задания у женщин:', sum_of_grades_female / count_of_grades_female)
+    print('Средняя оценка за экзамен у женщин:', sum_of_exams_female / count_of_exams_female)
 
 def average_group_grade_experience():
     sum_of_grades_exp = 0
     sum_of_exams_exp = 0
     sum_of_grades_noexp = 0
     sum_of_exams_noexp = 0
+    count_of_grades_exp = 0
+    count_of_grades_noexp = 0
+    count_of_exams_exp = 0
+    count_of_exams_noexp = 0
     for stud in students:
         if stud['experience'] == True:
             for grades in stud['homework']:
                 sum_of_grades_exp += grades
+                count_of_grades_exp += 1
             for exams in stud['exam']:
                 sum_of_exams_exp += exams
+                count_of_exams_exp += 1
         elif stud['experience'] == False:
             for grades in stud['homework']:
                 sum_of_grades_noexp += grades
+                count_of_grades_noexp += 1
             for exams in stud['exam']:
                 sum_of_exams_noexp += exams
-    print('Средняя оценка за домашние задания у студентов с опытом:', sum_of_grades_exp / 25)
-    print('Средняя оценка за экзамен у студентов с опытом:', sum_of_exams_exp / 5)
-    print('Средняя оценка за домашние задания у студентов без опыта:', sum_of_grades_noexp / 25)
-    print('Средняя оценка за экзамен у студентов без опыта:', sum_of_exams_noexp / 5)
+                count_of_exams_noexp += 1
+    print('Средняя оценка за домашние задания у студентов с опытом:', sum_of_grades_exp / count_of_grades_exp)
+    print('Средняя оценка за экзамен у студентов с опытом:', sum_of_exams_exp / count_of_exams_exp)
+    print('Средняя оценка за домашние задания у студентов без опыта:', sum_of_grades_noexp / count_of_grades_noexp)
+    print('Средняя оценка за экзамен у студентов без опыта:', sum_of_exams_noexp / count_of_exams_noexp)
 
 def best_student():
     sum_of_avg_grades = []
@@ -88,7 +109,7 @@ def best_student():
     for stud in students:
         for grades in stud['homework']:
             avg_grades += grades * 0.6
-        avg_grades /= 5
+        avg_grades /= len(stud['homework'])
         for exams in stud['exam']:
             avg_grades += exams * 0.4
         sum_of_avg_grades.append(round(avg_grades, 1))
